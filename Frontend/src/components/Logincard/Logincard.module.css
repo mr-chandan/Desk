@@ -1,0 +1,102 @@
+.Maincontainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.containerlogin {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.wraplogin {
+  width: 960px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 130px 130px 130px 130px;
+}
+
+.loginpic {
+  width: 316px;
+  display: flex;
+  justify-content: center;
+}
+
+.loginpic img {
+  max-width: 100%;
+}
+
+.loginform {
+  width: 290px;
+}
+
+.loginformtitle {
+  font-family: "poppins", sans-serif;
+  font-size: 24px;
+  color: #333333;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 700;
+  width: 100%;
+  display: block;
+  padding-bottom: 54px;
+}
+
+.textcenter {
+  text-align: center;
+}
+
+.pt1 {
+  padding-top: 12px;
+}
+
+.txt1 {
+  font-family: "poppins";
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+.txt2 {
+  font-family: "poppins";
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+@media screen and (max-width: 895px) {
+  .wraplogin {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 999px) {
+  .wraplogin {
+    padding: 10%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wraplogin {
+    padding: 10%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .loginpic {
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 315px) {
+    .loginpic {
+        width: 200px;
+      }
+  }
