@@ -21,7 +21,7 @@ export const Dialogbox = (props) => {
         <DialogContent>
           <form>
             <TextField id='id' value={props.data.id} onChange={props.change} placeholder='Enter the id' label="Enter the id" variant="outlined" margin='dense' fullWidth autoComplete='off' />
-            <TextField id='course' value={props.data.course} onChange={props.change} placeholder='Enter the course name' label="Enter the course name" variant="outlined" margin='dense' fullWidth autoComplete='off' />
+            <TextField id='name' value={props.data.name} onChange={props.change} placeholder='Enter the course name' label="Enter the course name" variant="outlined" margin='dense' fullWidth autoComplete='off' />
           </form>
         </DialogContent>
         <DialogActions>

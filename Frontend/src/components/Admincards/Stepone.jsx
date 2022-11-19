@@ -4,6 +4,7 @@ import Tables from '../Reusablecomponents/Tables/Tables'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Dialogbox } from '../Dialog/Dialogbox';
+import { add } from '../../https/request';
 
 export const Stepone = (props) => {
     function nextStep() {
@@ -13,7 +14,7 @@ export const Stepone = (props) => {
     const [Update, setUpdate] = useState(false);
 
     const adduser = () => {
-        setformData({ id: "", course: "", })
+        setformData({ id: "", name: "", })
         setUpdate(false)
         setOpen(true);
     };
@@ -38,6 +39,20 @@ export const Stepone = (props) => {
     }
     const submit = (props) => {
         console.log(formData)
+        async function adds() {
+            try {
+                const  res  = await add(formData)
+                if(res.data.sqlState == "42000"){
+                    console.log("error")
+                }else{
+                    console.log("sucess")
+                }
+            } catch (err) {
+                console.log(err);
+            }
+
+        }
+        adds()
     }
     return (
         <div className='box'>

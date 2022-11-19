@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import "../Tables/Tables.css"
 import Button from '@mui/material/Button';
+import { search } from '../../../https/request';
 
-const det = [
-  { id: '1', course: 'Bca' },
-  { id: '2', course: 'Bba' },
-  { id: '3', course: 'Bcom' },
-  { id: '4', course: 'Puc' }]
+
 const Tables = (props) => {
-  const [rowData] = useState(det);
+  const [rowData, setrowdata] = useState([]);
+  useEffect(() => {
+    async function fetchdata(){
+      try {
+        const { data } = await search({ "dbname": "courses" })
+        setrowdata(data)
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    fetchdata()
+  }, []);
+
 
   const onSelectionChanged = (event) => {
     const select = event.api.getSelectedRows()
@@ -26,7 +35,6 @@ const Tables = (props) => {
       props.setUpdate(true)
       props.setformData(p.data)
       props.open()
-
     }
     const handledelete = () => {
 
@@ -41,20 +49,21 @@ const Tables = (props) => {
       console.log(p.data)
     }
     return <Button variant="contained" onClick={click} className='space' >Details</Button>
-    
+
   }
   const [columnDefs] = useState([
     {
       field: 'id',
       filter: true,
       sortable: true,
+      sort: 'asc'
     },
-    { field: 'course', filter: true, sortable: true },
+    { field: 'name', filter: true, sortable: true },
     {
       headerName: "Edit",
       field: 'Name',
       cellRenderer: SimpleComp,
-      minWidth:300
+      minWidth: 300
     },
     {
       headerName: "GetDetails",
