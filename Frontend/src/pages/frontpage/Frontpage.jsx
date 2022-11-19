@@ -9,7 +9,6 @@ export const Frontpage = () => {
     <Front />
     <Attendancebar />
     <Alert />
-
   </>
   )
 }
