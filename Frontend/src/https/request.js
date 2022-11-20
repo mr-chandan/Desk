@@ -9,5 +9,7 @@ const api = axios.create({
     }
 });
 
-export const search = (data) => api.post('/api/find', data);    
-export const add = (data) => api.post('/api/add', data);  
+export const search = (data) => api.post('/api/find', data); 
+export const add = (data) => api.post('/api/add', data);
+export const del = (data) => api.post('/api/del', data);
+export const upd = (data) => api.post('/api/upd', data);

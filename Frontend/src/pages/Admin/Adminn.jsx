@@ -1,11 +1,11 @@
 import { React, useState } from 'react'
-import {Stepone} from '../../components/Admincards/Stepone';
-import {Steptwo} from '../../components/Admincards/Steptwo';
+import { Stepzero } from '../../components/Admintables/stepzero/Stepzero';
+import { Stepone } from '../../components/Admintables/stepone/Stepone';
 
 
 const steps = {
-  1: Stepone,
-  2: Steptwo
+  1: Stepzero,
+  2: Stepone
 };
 
 export const Adminn = () => {

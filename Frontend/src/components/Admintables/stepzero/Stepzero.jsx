@@ -1,18 +1,19 @@
 import { React, useState } from 'react'
-import '../Admincards/Admin.css'
-import Tables from '../Reusablecomponents/Tables/Tables'
+import './Stepzero.css'
+import Tables from '../../Reusablecomponents/Tables/Tables'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Dialogbox } from '../Dialog/Dialogbox';
-import { add } from '../../https/request';
+import { Dialogbox } from '../../Dialog/Dialogbox';
+import { add, upd } from '../../../https/request';
+import { useSelector } from 'react-redux';
 
-export const Stepone = (props) => {
+export const Stepzero = (props) => {
     function nextStep() {
         props.onNext();
     }
     const [open, setOpen] = useState(false);
     const [Update, setUpdate] = useState(false);
-
+    const storedata = useSelector((state) => state.TableSlice.olddata)
     const adduser = () => {
         setformData({ id: "", name: "", })
         setUpdate(false)
@@ -30,7 +31,6 @@ export const Stepone = (props) => {
     });
     const change = (e) => {
         const { value, id } = e.target
-        console.log(value, id)
         setformData((prev) => {
             return {
                 ...prev, [id]: value
@@ -38,21 +38,36 @@ export const Stepone = (props) => {
         })
     }
     const submit = (props) => {
-        console.log(formData)
         async function adds() {
             try {
-                const  res  = await add(formData)
-                if(res.data.sqlState == "42000"){
-                    console.log("error")
-                }else{
+                const res = await add(formData)
+                console.log(res)
+                if (res.status == "200") {
                     console.log("sucess")
                 }
             } catch (err) {
-                console.log(err);
+                console.log("err")
             }
-
         }
         adds()
+        setOpen(false);
+    }
+    const update = (props) => {
+        console.log(storedata.id)
+        console.log(formData.name)
+        async function up() {
+            try {
+                const res = await upd({id:storedata.id,newname:formData.name})
+                console.log(res)
+                if (res.status == "200") {
+                    console.log("sucess")
+                }
+            } catch (err) {
+                console.log("err")
+            }
+        }
+        up()
+        setOpen(false);
     }
     return (
         <div className='box'>
@@ -61,11 +76,11 @@ export const Stepone = (props) => {
                 <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
                     Back
                 </Button>
-                <Button variant="contained" onClick={adduser} color="success" className='useradd'>Add Course</Button>
+                <Button variant="contained" onClick={adduser} color="success" className='useradd' >Add Course</Button>
             </div>
 
             <Tables onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} />
-            <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} />
+            <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} update={update} />
         </div>
     )
 }

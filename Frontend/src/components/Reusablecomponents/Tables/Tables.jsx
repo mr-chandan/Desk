@@ -4,13 +4,15 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import "../Tables/Tables.css"
 import Button from '@mui/material/Button';
-import { search } from '../../../https/request';
-
+import { search, del } from '../../../https/request';
+import {useDispatch} from 'react-redux'
+import {setolddata,setstepone} from '../../../store/TableSlice'
 
 const Tables = (props) => {
   const [rowData, setrowdata] = useState([]);
+  const dispatch = useDispatch()
   useEffect(() => {
-    async function fetchdata(){
+    async function fetchdata() {
       try {
         const { data } = await search({ "dbname": "courses" })
         setrowdata(data)
@@ -31,13 +33,28 @@ const Tables = (props) => {
 
   const SimpleComp = (p) => {
     const handleupdate = () => {
-      console.log(p.data)
+      dispatch(setolddata(p.data))
       props.setUpdate(true)
       props.setformData(p.data)
       props.open()
     }
     const handledelete = () => {
-
+      const check = window.confirm("Are u sure of deleting the records")
+      async function adds() {
+        try {
+          const res = await del(p.data)
+          if (res.data.sqlState == "42000") {
+            console.log("error")
+          } else {
+            console.log("sucess")
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      if (check) {
+        adds()
+      }
     }
     return <><Button variant="contained" onClick={handleupdate} className='space' >Update</Button>
       <Button variant="contained" color="error" onClick={handledelete}>Delete</Button>
@@ -45,8 +62,8 @@ const Tables = (props) => {
   }
   const GetDetails = (p) => {
     const click = () => {
+      dispatch(setstepone(p.data))
       props.onpress()
-      console.log(p.data)
     }
     return <Button variant="contained" onClick={click} className='space' >Details</Button>
 
