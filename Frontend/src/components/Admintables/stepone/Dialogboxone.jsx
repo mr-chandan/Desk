@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 
-export const Dialogbox = (props) => {
+export const Dialogboxone = (props) => {
   return (
     <div>
       <Dialog
@@ -16,18 +16,17 @@ export const Dialogbox = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {props.Update?"Update":"Create new user"}
+          {props.Update ? "Update" : "Create new user"}
         </DialogTitle>
         <DialogContent>
           <form>
-          {!props.Update? <TextField id='id' value={props.data.id} onChange={props.change} placeholder='Enter the id' label="Enter the id" variant="outlined" margin='dense' fullWidth autoComplete='off' />:''}
             <TextField id='name' value={props.data.name} onChange={props.change} placeholder='Enter the course name' label="Enter the course name" variant="outlined" margin='dense' fullWidth autoComplete='off' />
           </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={props.close}>Disagree</Button>
-          <Button onClick= {props.Update?props.update:props.submit} autoFocus >
-          {props.Update?"Update":"Submit"}
+          <Button onClick={props.Update ? props.update : props.submit} autoFocus >
+            {props.Update ? "Update" : "Submit"}
           </Button>
         </DialogActions>
       </Dialog>

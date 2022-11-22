@@ -1,9 +1,9 @@
 import { React, useState } from 'react'
 import './Stepzero.css'
-import Tables from '../../Reusablecomponents/Tables/Tables'
+import Tables from './Tables'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Dialogbox } from '../../Dialog/Dialogbox';
+import { Dialogbox } from './Dialogbox';
 import { add, upd } from '../../../https/request';
 import { useSelector } from 'react-redux';
 
@@ -11,11 +11,12 @@ export const Stepzero = (props) => {
     function nextStep() {
         props.onNext();
     }
+    const [value, setValue] = useState(1);
     const [open, setOpen] = useState(false);
     const [Update, setUpdate] = useState(false);
     const storedata = useSelector((state) => state.TableSlice.olddata)
     const adduser = () => {
-        setformData({ id: "", name: "", })
+        setformData({name: "", })
         setUpdate(false)
         setOpen(true);
     };
@@ -26,7 +27,6 @@ export const Stepzero = (props) => {
         setOpen(false);
     };
     const [formData, setformData] = useState({
-        id: "",
         course: "",
     });
     const change = (e) => {
@@ -37,6 +37,9 @@ export const Stepzero = (props) => {
             }
         })
     }
+    const handleClick = () => {
+        setValue((pre)=>{return pre+1})
+      };
     const submit = (props) => {
         async function adds() {
             try {
@@ -51,13 +54,12 @@ export const Stepzero = (props) => {
         }
         adds()
         setOpen(false);
+        handleClick()
     }
     const update = (props) => {
-        console.log(storedata.id)
-        console.log(formData.name)
         async function up() {
             try {
-                const res = await upd({id:storedata.id,newname:formData.name})
+                const res = await upd({ id: storedata.id, newname: formData.name, name: storedata.name })
                 console.log(res)
                 if (res.status == "200") {
                     console.log("sucess")
@@ -68,6 +70,7 @@ export const Stepzero = (props) => {
         }
         up()
         setOpen(false);
+        handleClick()
     }
     return (
         <div className='box'>
@@ -79,7 +82,7 @@ export const Stepzero = (props) => {
                 <Button variant="contained" onClick={adduser} color="success" className='useradd' >Add Course</Button>
             </div>
 
-            <Tables onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} />
+           <Tables onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} value={value}  handleClick={handleClick}/>
             <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} update={update} />
         </div>
     )

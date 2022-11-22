@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import "../Tables/Tables.css"
+import "./Tables.css"
 import Button from '@mui/material/Button';
 import { search, del } from '../../../https/request';
 import {useDispatch} from 'react-redux'
@@ -21,7 +21,7 @@ const Tables = (props) => {
       }
     }
     fetchdata()
-  }, []);
+  }, [props.value]);
 
 
   const onSelectionChanged = (event) => {
@@ -43,10 +43,10 @@ const Tables = (props) => {
       async function adds() {
         try {
           const res = await del(p.data)
-          if (res.data.sqlState == "42000") {
-            console.log("error")
-          } else {
+          if (res.status == "200") {
             console.log("sucess")
+          } else {
+            console.log("error")
           }
         } catch (err) {
           console.log(err);
@@ -54,6 +54,7 @@ const Tables = (props) => {
       }
       if (check) {
         adds()
+        props.handleClick()
       }
     }
     return <><Button variant="contained" onClick={handleupdate} className='space' >Update</Button>

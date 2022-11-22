@@ -1,56 +1,84 @@
-// import { React, useState } from 'react'
-// // import '../Admincards/Admin.css'
-// import Tables from '../../Reusablecomponents/Tables/Tables'
-// import Button from '@mui/material/Button';
-// import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-// import { Dialogbox } from '../../Dialog/Dialogbox';
+import { React, useState } from 'react'
+// import './Stepone.css'
+import Tableone from './Tableone'
+import Button from '@mui/material/Button';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Dialogboxone } from './Dialogboxone';
+import { addsteptwo,updsteptwo } from '../../../https/request'
+import { useSelector } from 'react-redux';
 
+export const Stepone = (props) => {
+    const storedata = useSelector((state) => state.TableSlice.stepone.name)
+    const oldstoredata = useSelector((state) => state.TableSlice.olddata)
+    function nextStep() {
+        props.onNext();
+    }
+    const [value, setValue] = useState(1);
+    const [open, setOpen] = useState(false);
+    const [Update, setUpdate] = useState(false);
+    const handleClick = () => {
+        setValue((pre) => { return pre + 1 })
+    };
+    const adduser = () => {
+        setformData("")
+        setUpdate(false)
+        setOpen(true);
+    };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const [formData, setformData] = useState("");
+    const change = (e) => {
+        const { value } = e.target
+        setformData(value)
+    }
+    const submit = (props) => {
+        async function adds() {
+            try {
+                const res = await addsteptwo({ formData, storedata })
+                console.log(res)
+                if (res.status == "200") {
+                    console.log("sucess")
+                }
+            } catch (err) {
+                console.log("err")
+            }
+        }
+        adds()
+        setOpen(false);
+        handleClick()
+    }
+    const update = (props) => {
+        async function up() {
+            const id = oldstoredata.id
+            try {
+                const res = await updsteptwo({storedata,formData,id})
+                console.log(res)
+                if (res.status == "200") {
+                    console.log("sucess")
+                }
+            } catch (err) {
+                console.log("err")
+            }
+        }
+        up()
+        setOpen(false);
+        handleClick()
+    }
+    return (
+        <div className='box'>
+            <div className='cont'>
+                <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
+                    Back
+                </Button>
+                <Button variant="contained" onClick={adduser} color="success" className='useradd'>Add Course</Button>
+            </div>
 
-// export const Stepone = (props) => {
-//     function nextStep() {
-//         props.onNext();
-//     }
-//     const [open, setOpen] = useState(false);
-//     const [Update, setUpdate] = useState(false);
-
-//     const adduser = () => {
-//         setformData({ id: "", course: "", })
-//         setUpdate(false)
-//         setOpen(true);
-//     };
-//     const handleClickOpen = () => {
-//         setOpen(true);
-//     };
-//     const handleClose = () => {
-//         setOpen(false);
-//     };
-//     const [formData, setformData] = useState({
-//         id: "",
-//         course: "",
-//     });
-//     const change = (e) => {
-//         const { value, id } = e.target
-//         console.log(value, id)
-//         setformData((prev) => {
-//             return {
-//                 ...prev, [id]: value
-//             }
-//         })
-//     }
-//     const submit = (props) => {
-//         console.log(formData)
-//     }
-//     return (
-//         <div className='box'>
-//             <div className='cont'>
-//                 <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
-//                     Back
-//                 </Button>
-//                 <Button variant="contained" onClick={adduser} color="success" className='useradd'>Add Course</Button>
-//             </div>
-
-//             <Tables onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} />
-//             <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} />
-//         </div>
-//     )
-// }
+            <Tableone onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} value={value} handleClick={handleClick} />
+            <Dialogboxone open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} update={update} />
+        </div>
+    )
+}

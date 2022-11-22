@@ -1,9 +1,9 @@
 const mysqlConnection = require('../database/Sqlconnect')
 
-class Course {
+class Stepone {
     async search(req, res) {
-        const {dbname} = req.body
-        mysqlConnection.query(`select * from ${dbname}`, (err, rows) => {
+        const {name} = req.body
+        mysqlConnection.query(`select * from ${name}`, (err, rows) => {
             if (!err) {
                 res.status(200).send(rows);
             } else {
@@ -12,8 +12,8 @@ class Course {
         })
     }
     async add(req, res) {
-        const {id,name} = req.body
-        mysqlConnection.query(`INSERT INTO courses VALUES (${id}, "${name}")`, (err, rows) => {
+        const {formData,storedata} = req.body
+        mysqlConnection.query(`INSERT INTO ${storedata} (SEM_Num)VALUES ("${formData}")`, (err, rows) => {
             if (!err) {
                 res.status(200).send(rows);
             } else {
@@ -22,8 +22,9 @@ class Course {
         })
     }
     async del(req, res) {
-        const {id,name} = req.body
-        mysqlConnection.query(`DELETE FROM courses WHERE id=${id};`, (err, rows) => {
+        const {pdata,tbname} = req.body
+        console.log(req.body)
+        mysqlConnection.query(`DELETE FROM ${tbname} WHERE id=${pdata};`, (err, rows) => {
             if (!err) {
                 res.status(200).send(rows);
             } else {
@@ -32,8 +33,8 @@ class Course {
         })
     }
     async upd(req, res) {
-        const {id,newname} = req.body
-        mysqlConnection.query(`UPDATE courses SET name = "${newname}" WHERE id = ${id};`, (err, rows) => {
+        const {storedata,formData,id} = req.body
+        mysqlConnection.query(`UPDATE ${storedata} SET SEM_Num = "${formData}" WHERE id = ${id};`, (err, rows) => {
             if (!err) {
                 res.status(200).send(rows);
             } else {
@@ -43,4 +44,4 @@ class Course {
     }
 }
 
-module.exports = new Course();
+module.exports = new Stepone();
