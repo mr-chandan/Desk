@@ -1,10 +1,9 @@
 import { React, useState } from 'react'
-// import './Stepone.css'
 import Tableone from './Tableone'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Dialogboxone } from './Dialogboxone';
-import { addsteptwo,updsteptwo } from '../../../https/request'
+import { Dialogbox } from '../stepzero/Dialogbox';
+import { addsteptwo, updsteptwo } from '../../../https/request'
 import { useSelector } from 'react-redux';
 
 export const Stepone = (props) => {
@@ -53,9 +52,8 @@ export const Stepone = (props) => {
     }
     const update = (props) => {
         async function up() {
-            const id = oldstoredata.id
             try {
-                const res = await updsteptwo({storedata,formData,id})
+                const res = await updsteptwo({ storedata, formData, oldstoredata })
                 console.log(res)
                 if (res.status == "200") {
                     console.log("sucess")
@@ -70,6 +68,7 @@ export const Stepone = (props) => {
     }
     return (
         <div className='box'>
+            <div className='txts'>{storedata}.info</div>
             <div className='cont'>
                 <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
                     Back
@@ -78,7 +77,7 @@ export const Stepone = (props) => {
             </div>
 
             <Tableone onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} value={value} handleClick={handleClick} />
-            <Dialogboxone open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} update={update} />
+            <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} update={update} />
         </div>
     )
 }

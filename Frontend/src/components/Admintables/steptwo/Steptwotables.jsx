@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import "../stepzero/Tables.css"
+import './Tables.css'
 import Button from '@mui/material/Button';
 import { searchone, delsteptwo } from '../../../https/request';
 import { useDispatch, useSelector } from 'react-redux'
 import { setolddata, setstepone } from '../../../store/TableSlice'
+import { display } from '@mui/system';
 
-const Tables = (props) => {
-  const [rowData, setrowdata] = useState([]);
+const Steptwotables = (props) => {
+  const [rowData, setrowdata] = useState([
+    { make: 'Toyota', model: 'Celica', price: 35000 },
+    { make: 'Ford', model: 'Mondeo', price: 32000 },
+    { make: 'Porsche', model: 'Boxster', price: 72000 },
+  ]);
   const dispatch = useDispatch()
   const storedata = useSelector((state) => state.TableSlice.stepone)
   useEffect(() => {
@@ -27,7 +32,7 @@ const Tables = (props) => {
 
   const SimpleComp = (p) => {
     const tbname = storedata.name
-    const pdata = p.data
+    const pdata = p.data.id
     const handleupdate = () => {
       dispatch(setolddata(p.data))
       props.setUpdate(true)
@@ -66,35 +71,40 @@ const Tables = (props) => {
 
   }
   const [columnDefs] = useState([
-    {
-      field: 'id',
-      filter: true,
-      sortable: true,
-      sort: 'asc'
-    },
-    { field: 'SEM_Num', filter: true, sortable: true },
-    {
-      headerName: "Edit",
-      field: 'Name',
-      cellRenderer: SimpleComp,
-      minWidth: 300
-    },
-    {
-      headerName: "GetDetails",
-      field: 'id',
-      cellRenderer: GetDetails,
-    }
-  ]);
+    { field: 'make' },
+    { field: 'model' },
+    { field: 'price' },
+  ])
+    
+//     [
+//     {
+//       field: 'id',
+//       filter: true,
+//       sortable: true,
+//       sort: 'asc'
+//     },
+//     { field: 'SEM_Num', filter: true, sortable: true },
+//     {
+//       headerName: "Edit",
+//       field: 'Name',
+//       cellRenderer: SimpleComp,
+//       minWidth: 300
+//     },
+//     {
+//       headerName: "GetDetails",
+//       field: 'id',
+//       cellRenderer: GetDetails,
+//     }
+//   ]);
   return (
-    <div className="wrap">
-      <div className="ag-theme-alpine" style={{ maxWidth: "100%", boxSizing: "border-box" }}>
+    <div className="tablewrap" style={props.sectable}>
+      <div className="ag-theme-alpine" style={{width: '100%', height: '100%;'}}>
         <AgGridReact
           rowData={rowData}
           columnDefs={columnDefs}
           rowSelection="multiple"
           suppressClickEdit="true"
           suppressRowClickSelection={true}
-          domLayout={'autoHeight'}
           defaultColDef={{ flex: 1, minWidth: 200 }} />
       </div>
     </div>
@@ -102,34 +112,4 @@ const Tables = (props) => {
   );
 }
 
-export default Tables
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const onSelectionChanged = (event) => {
-  //   const select = event.api.getSelectedRows()
-  //   select.forEach(element => {
-  //     console.log(element.Name)
-  //   });
-  // }
+export default Steptwotables

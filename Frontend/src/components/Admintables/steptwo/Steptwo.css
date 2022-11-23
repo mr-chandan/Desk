@@ -1,0 +1,13 @@
+.tableblock {
+  padding: 20px;
+}
+.buto {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
