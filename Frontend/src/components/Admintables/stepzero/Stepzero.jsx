@@ -4,8 +4,8 @@ import Tables from './Tables'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Dialogbox } from './Dialogbox';
-import { add, upd } from '../../../https/request';
-import { useSelector } from 'react-redux';
+import { add } from '../../../https/request';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 export const Stepzero = (props) => {
     function nextStep() {
@@ -14,10 +14,8 @@ export const Stepzero = (props) => {
     const [value, setValue] = useState(1);
     const [open, setOpen] = useState(false);
     const [Update, setUpdate] = useState(false);
-    const storedata = useSelector((state) => state.TableSlice.olddata)
     const adduser = () => {
-        setformData({name: "", })
-        setUpdate(false)
+        setformData({})
         setOpen(true);
     };
     const handleClickOpen = () => {
@@ -26,9 +24,7 @@ export const Stepzero = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
-    const [formData, setformData] = useState({
-        course: "",
-    });
+    const [formData, setformData] = useState({})
     const change = (e) => {
         const { value, id } = e.target
         setformData((prev) => {
@@ -38,8 +34,8 @@ export const Stepzero = (props) => {
         })
     }
     const handleClick = () => {
-        setValue((pre)=>{return pre+1})
-      };
+        setValue((pre) => { return pre + 1 })
+    };
     const submit = (props) => {
         async function adds() {
             try {
@@ -56,34 +52,19 @@ export const Stepzero = (props) => {
         setOpen(false);
         handleClick()
     }
-    const update = (props) => {
-        async function up() {
-            try {
-                const res = await upd({ id: storedata.id, newname: formData.name, name: storedata.name })
-                console.log(res)
-                if (res.status == "200") {
-                    console.log("sucess")
-                }
-            } catch (err) {
-                console.log("err")
-            }
-        }
-        up()
-        setOpen(false);
-        handleClick()
-    }
+
     return (
         <div className='box'>
-            <div className='txts'>Courses</div>
+            <div className='txts'>COURSES</div>
             <div className='cont'>
-                <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
+                <Button variant="contained" color="secondary" disabled startIcon={<ArrowBackIosIcon />}>
                     Back
                 </Button>
-                <Button variant="contained" onClick={adduser} color="success" className='useradd' >Add Course</Button>
+                <Button variant="contained" onClick={adduser} color="success" className='useradd' startIcon={<LocalLibraryIcon />}>Add Course</Button>
             </div>
 
-           <Tables onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} value={value}  handleClick={handleClick}/>
-            <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} update={update} />
+            <Tables onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} value={value} handleClick={handleClick} />
+            <Dialogbox open={open} close={handleClose} data={formData} change={change} submit={submit} Update={Update} />
         </div>
     )
 }

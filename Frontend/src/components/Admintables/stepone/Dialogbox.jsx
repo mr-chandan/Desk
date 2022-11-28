@@ -16,7 +16,7 @@ export const Dialogbox = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Create new user
+          {props.Update ? "Update" : "Create new user"}
         </DialogTitle>
         <DialogContent>
           <form>
@@ -25,8 +25,8 @@ export const Dialogbox = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.close}>Disagree</Button>
-          <Button onClick={props.submit} autoFocus >
-            Submit
+          <Button onClick={props.Update ? props.update : props.submit} autoFocus >
+            {props.Update ? "Update" : "Submit"}
           </Button>
         </DialogActions>
       </Dialog>

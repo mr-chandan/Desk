@@ -62,6 +62,7 @@ const Steptwotables = (props) => {
       <Button variant="contained" color="error" onClick={handledelete}>Delete</Button>
     </>
   }
+  
   const GetDetails = (p) => {
     const click = () => {
       dispatch(setstepone(p.data))

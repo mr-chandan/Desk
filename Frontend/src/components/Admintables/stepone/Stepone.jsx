@@ -2,12 +2,13 @@ import { React, useState } from 'react'
 import Tableone from './Tableone'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Dialogbox } from '../stepzero/Dialogbox';
+import { Dialogbox } from './Dialogbox';
 import { addsteptwo, updsteptwo } from '../../../https/request'
 import { useSelector } from 'react-redux';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 export const Stepone = (props) => {
-    const storedata = useSelector((state) => state.TableSlice.stepone.name)
+    const storedata = useSelector((state) => state.TableSlice.stepone.courses)
     const oldstoredata = useSelector((state) => state.TableSlice.olddata)
     function nextStep() {
         props.onNext();
@@ -70,10 +71,10 @@ export const Stepone = (props) => {
         <div className='box'>
             <div className='txts'>{storedata}.info</div>
             <div className='cont'>
-                <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
+            <Button variant="contained" color="secondary" startIcon={<ArrowBackIosIcon />}>
                     Back
                 </Button>
-                <Button variant="contained" onClick={adduser} color="success" className='useradd'>Add Course</Button>
+                <Button variant="contained" onClick={adduser} color="success" className='useradd' startIcon={<LocalLibraryIcon />}>Add Course</Button>
             </div>
 
             <Tableone onpress={nextStep} setformData={setformData} open={handleClickOpen} setUpdate={setUpdate} value={value} handleClick={handleClick} />

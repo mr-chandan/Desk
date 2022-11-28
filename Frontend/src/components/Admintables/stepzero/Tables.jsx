@@ -5,8 +5,10 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import "./Tables.css"
 import Button from '@mui/material/Button';
 import { search, del } from '../../../https/request';
-import {useDispatch} from 'react-redux'
-import {setolddata,setstepone} from '../../../store/TableSlice'
+import { useDispatch } from 'react-redux'
+import { setstepone } from '../../../store/TableSlice'
+import DeleteIcon from '@mui/icons-material/Delete';
+import InfoIcon from '@mui/icons-material/Info';
 
 const Tables = (props) => {
   const [rowData, setrowdata] = useState([]);
@@ -23,21 +25,7 @@ const Tables = (props) => {
     fetchdata()
   }, [props.value]);
 
-
-  const onSelectionChanged = (event) => {
-    const select = event.api.getSelectedRows()
-    select.forEach(element => {
-      console.log(element.Name)
-    });
-  }
-
   const SimpleComp = (p) => {
-    const handleupdate = () => {
-      dispatch(setolddata(p.data))
-      props.setUpdate(true)
-      props.setformData(p.data)
-      props.open()
-    }
     const handledelete = () => {
       const check = window.confirm("Are u sure of deleting the records")
       async function adds() {
@@ -57,16 +45,14 @@ const Tables = (props) => {
         props.handleClick()
       }
     }
-    return <><Button variant="contained" onClick={handleupdate} className='space' >Update</Button>
-      <Button variant="contained" color="error" onClick={handledelete}>Delete</Button>
-    </>
+    return <Button variant="contained" color="error" onClick={handledelete} startIcon={<DeleteIcon />}> Delete </Button>
   }
   const GetDetails = (p) => {
     const click = () => {
       dispatch(setstepone(p.data))
       props.onpress()
     }
-    return <Button variant="contained" onClick={click} className='space' >Details</Button>
+    return <Button variant="contained" onClick={click} className='space' startIcon={<InfoIcon />}>Details</Button>
 
   }
   const [columnDefs] = useState([
@@ -76,7 +62,7 @@ const Tables = (props) => {
       sortable: true,
       sort: 'asc'
     },
-    { field: 'name', filter: true, sortable: true },
+    { field: 'courses', filter: true, sortable: true },
     {
       headerName: "Edit",
       field: 'Name',
@@ -96,7 +82,6 @@ const Tables = (props) => {
           rowData={rowData}
           columnDefs={columnDefs}
           rowSelection="multiple"
-          onSelectionChanged={onSelectionChanged}
           suppressClickEdit="true"
           suppressRowClickSelection={true}
           domLayout={'autoHeight'}
@@ -108,7 +93,3 @@ const Tables = (props) => {
 }
 
 export default Tables
-
-// headerCheckboxSelection: true,
-// checkboxSelection: true,
-// showDisabledCheckboxes: true
