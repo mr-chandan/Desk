@@ -23,6 +23,6 @@ export const updsteptwo = (data) => api.post('/api/stepone/upd', data);
 
 //stepone
 export const searchtwo = (data) => api.post('/api/steptwo/find', data);
-// export const addsteptwo = (data) => api.post('/api/stepone/add', data);
-// export const delsteptwo = (data) => api.post('/api/stepone/del', data);
+export const addsteptwoone = (data) => api.post('/api/steptwo/add', data);
+export const delsteptwoone = (data) => api.post('/api/steptwo/del', data);
 // export const updsteptwo = (data) => api.post('/api/stepone/upd', data);

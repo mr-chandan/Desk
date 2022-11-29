@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {React,useState} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,17 +9,19 @@ import { TextField } from '@mui/material';
 export function Dialogbox(props) {
     const check = () => {
         if (props.check == "languagesbtn") {
-            return <TextField id="languagename" value={props.data.section} onChange={e => props.onChange(e)} placeholder='Enter Language name to add' label="Language" fullWidth variant='outlined' margin='dense' />
+            return <TextField id="languagename" value={props.data.section} onChange={e => props.onChange(e)} placeholder='Enter Language name to add' label="Language" fullWidth variant='outlined' margin='dense'/>
         }
         else if (props.check == "subjectbtn") {
-            return <TextField id="subjectname" value={props.data.section} onChange={e => props.onChange(e)} placeholder='Enter Subject name to add' label="Subject" fullWidth variant='outlined' margin='dense' />
+            return <TextField id="subjectname" value={props.data.section} onChange={e => props.onChange(e)} placeholder='Enter Subject name to add' label="Subject" fullWidth variant='outlined' margin='dense'/>
         }
         else {
-            return <><TextField id="NAME" value={props.data.name} onChange={e => props.onChange(e)} placeholder='Enter name' label="name" fullWidth variant='outlined' margin='dense' />
-                <TextField id="SECTION" value={props.data.section} onChange={e => props.onChange(e)} placeholder='Enter name' label="name" fullWidth variant='outlined' margin='dense' />
-                <TextField id="EMAIL" value={props.data.email} onChange={e => props.onChange(e)} placeholder='Enter name' label="name" fullWidth variant='outlined' margin='dense' />
-                <TextField id="PASSWORD" value={props.data.password} onChange={e => props.onChange(e)} placeholder='Enter name' label="name" fullWidth variant='outlined' margin='dense' />
-                <TextField id="LANGUAGE" value={props.data.languages} onChange={e => props.onChange(e)} placeholder='Enter name' label="name" fullWidth variant='outlined' margin='dense' /> </>
+            return <>
+                <TextField id="NAME" value={props.data.name} onChange={e => props.onChange(e)} placeholder='Enter name' label="Name" fullWidth variant='outlined' margin='dense'/>
+                <TextField id="SECTION" value={props.data.section} onChange={e => props.onChange(e)} placeholder='Enter name' label="Section" fullWidth variant='outlined' margin='dense'/>
+                <TextField id="EMAIL" value={props.data.email} onChange={e => props.onChange(e)} placeholder='Enter name' label="Email" fullWidth variant='outlined' margin='dense'/>
+                <TextField id="PASSWORD" value={props.data.password} onChange={e => props.onChange(e)} placeholder='Enter name' label="Password" fullWidth variant='outlined' margin='dense'/>
+                <TextField id="LANGUAGE" value={props.data.languages} onChange={e => props.onChange(e)} placeholder='Enter name' label="Language" fullWidth variant='outlined' margin='dense'/>
+            </>
         }
     }
     return (
@@ -40,8 +42,8 @@ export function Dialogbox(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.handleClose}>Cancel</Button>
-                    <Button>
-                        Submit
+                    <Button onClick={props.Updateclick ? props.update : props.submit} autoFocus >
+                        {props.Update ? "Update" : "Submit"}
                     </Button>
                 </DialogActions>
             </Dialog>

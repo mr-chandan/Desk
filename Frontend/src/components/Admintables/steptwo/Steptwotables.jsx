@@ -5,10 +5,12 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './Tables.css'
 import Button from '@mui/material/Button';
 import { searchtwo } from '../../../https/request';
-import { setolddata, setstepone } from '../../../store/TableSlice'
+import { delsteptwoone } from '../../../https/request'
+import { useSelector } from 'react-redux'
 
 const Steptwotables = (props) => {
   const [rowData, setrowdata] = useState([]);
+  const storedata = useSelector((state) => state.TableSlice.stepone)
   useEffect(() => {
     async function fetchdata() {
       try {
@@ -23,37 +25,33 @@ const Steptwotables = (props) => {
     fetchdata()
   }, [props.value]);
 
-  const SimpleComp = (p) => {
-    // const tbname = storedata.name
-    // const pdata = p.data.id
-    const handleupdate = () => {
-      // dispatch(setolddata(p.data))
-      // props.setUpdate(true)
-      // props.setformData(p.data)
-      // props.open()
-    }
+  const Deletecell = (p) => {
     const handledelete = () => {
-      // const check = window.confirm("Are u sure of deleting the records")
-      // async function adds() {
-      //   try {
-      //     const res = await delsteptwo({ pdata, tbname })
-      //     if (res.status == "200") {
-      //       console.log("sucess")
-      //     } else {
-      //       console.log("error")
-      //     }
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
-      // if (check) {
-      //   adds()
-      //   props.handleClick()
-      // }
+      if (props.data == "languagesbtn") {
+        const check = window.confirm("Are u sure of deleting the records")
+        const pdata = p.data
+        const query = `DELETE FROM ${storedata.Sem_Name}_languages WHERE id=${pdata.id};`
+        async function adds() {
+          try {
+            const res = await delsteptwoone({ query })
+            console.log(res)
+            if (res.status == "200") {
+              console.log("sucess")
+            }
+          } catch (err) {
+            console.log("err")
+          }
+        }
+        if (check) {
+          adds()
+        }
+        props.valuee()
+      } else {
+        console.log("nope")
+      }
     }
-    return <><Button variant="contained" onClick={handleupdate} className='space' >Update</Button>
-      <Button variant="contained" color="error" onClick={handledelete}>Delete</Button>
-    </>
+    return <Button variant="contained" color="error" onClick={handledelete}>Delete</Button>
+
   }
   const GetDetails = (p) => {
     const click = () => {
@@ -73,43 +71,39 @@ const Steptwotables = (props) => {
   }
   const check = () => {
     if (props.check === "language") {
-      return { field: 'Languages', filter: true, sortable: true }
+      return [
+        { field: 'id', filter: true, sortable: true, sort: 'asc', minWidth: 100 },
+        { field: 'languages', filter: true, sortable: true },
+        { headerName: "Update", field: 'Update', cellRenderer: Updatecell, minWidth: 200 },
+        { headerName: "Edit", field: 'Name', cellRenderer: Deletecell, minWidth: 200 },
+        { headerName: "GetDetails", field: 'id', cellRenderer: GetDetails, }
+      ]
     }
     else if (props.check === "subject") {
-      return { field: 'Subject', filter: true, sortable: true }
+      return [
+        { field: 'id', filter: true, sortable: true, sort: 'asc', minWidth: 100 },
+        { field: 'subject', filter: true, sortable: true },
+        { headerName: "Update", field: 'Update', cellRenderer: Updatecell, minWidth: 200 },
+        { headerName: "Edit", field: 'Name', cellRenderer: Deletecell, minWidth: 200 },
+        { headerName: "GetDetails", field: 'id', cellRenderer: GetDetails, }
+      ]
     }
-    else{
-      return  "{field: 'name', filter: true, sortable: true }, { field: 'section', filter: true, sortable: true }, { field: 'email', filter: true, sortable: true }, { field: 'password', filter: true, sortable: true }, { field: 'language', filter: true, sortable: true }"
+    else {
+      return [
+        { field: 'ID', filter: true, sortable: true, sort: 'asc', minWidth: 90 },
+        { field: 'NAME', filter: true, sortable: true },
+        { field: 'SECTION', filter: true, sortable: true, minWidth: 150 },
+        { field: 'EMAIL', filter: true, sortable: true },
+        { field: 'PASSWORD', filter: true, sortable: true },
+        { field: 'LANGUAGE', filter: true, sortable: true, minWidth: 150 },
+        { headerName: "Update", field: 'Update', cellRenderer: Updatecell, minWidth: 200 },
+        { headerName: "Edit", field: 'Name', cellRenderer: Deletecell, minWidth: 200 },
+        { headerName: "GetDetails", field: 'id', cellRenderer: GetDetails, }
+      ]
     }
   }
-  const [columnDefs] = useState(
-    [
-      {
-        field: 'id',
-        filter: true,
-        sortable: true,
-        sort: 'asc',
-        minWidth: 100
-      },
-      check(),
-      {
-        headerName: "Update",
-        field: 'Update',
-        cellRenderer: Updatecell,
-        minWidth: 200
-      },
-      {
-        headerName: "Edit",
-        field: 'Name',
-        cellRenderer: SimpleComp,
-        minWidth: 200
-      },
-      {
-        headerName: "GetDetails",
-        field: 'id',
-        cellRenderer: GetDetails,
-      }
-    ]);
+  var Str = props.check
+  const [columnDefs] = useState(check());
   return (
     <div className="tablewrap" style={props.sectable}>
       <div className="ag-theme-alpine" style={{ width: '100%', height: '100%' }}>
