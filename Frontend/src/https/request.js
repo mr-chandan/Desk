@@ -19,3 +19,10 @@ export const searchone = (data) => api.post('/api/stepone/find', data);
 export const addsteptwo = (data) => api.post('/api/stepone/add', data);
 export const delsteptwo = (data) => api.post('/api/stepone/del', data);
 export const updsteptwo = (data) => api.post('/api/stepone/upd', data);
+
+
+//stepone
+export const searchtwo = (data) => api.post('/api/steptwo/find', data);
+// export const addsteptwo = (data) => api.post('/api/stepone/add', data);
+// export const delsteptwo = (data) => api.post('/api/stepone/del', data);
+// export const updsteptwo = (data) => api.post('/api/stepone/upd', data);

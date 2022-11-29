@@ -6,7 +6,7 @@ import "./Tables.css"
 import Button from '@mui/material/Button';
 import { search, del } from '../../../https/request';
 import { useDispatch } from 'react-redux'
-import { setstepone } from '../../../store/TableSlice'
+import {setstepone } from '../../../store/TableSlice'
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -24,7 +24,6 @@ const Tables = (props) => {
     }
     fetchdata()
   }, [props.value]);
-
   const SimpleComp = (p) => {
     const handledelete = () => {
       const check = window.confirm("Are u sure of deleting the records")
@@ -45,15 +44,18 @@ const Tables = (props) => {
         props.handleClick()
       }
     }
-    return <Button variant="contained" color="error" onClick={handledelete} startIcon={<DeleteIcon />}> Delete </Button>
+    return <>
+      <Button variant="contained" color="error" onClick={handledelete} startIcon={<DeleteIcon />}>
+        Delete
+      </Button>
+    </>
   }
   const GetDetails = (p) => {
     const click = () => {
       dispatch(setstepone(p.data))
       props.onpress()
     }
-    return <Button variant="contained" onClick={click} className='space' startIcon={<InfoIcon />}>Details</Button>
-
+    return <Button variant="contained" onClick={click} className='space' startIcon={<InfoIcon/>}>Details</Button>
   }
   const [columnDefs] = useState([
     {
