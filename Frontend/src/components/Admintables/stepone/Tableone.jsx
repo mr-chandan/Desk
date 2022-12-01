@@ -61,9 +61,9 @@ const Tables = (props) => {
   }
   const Updatecell = (p) => {
     const handleupdate = () => {
+      props.setformData(p.data)
       dispatch(setolddata(p.data))
       props.setUpdate(true)
-      props.setformData(p.data)
       props.open()
     }
     return <Button variant="contained" onClick={handleupdate} className='space' startIcon={<UpdateIcon />}>Update</Button>

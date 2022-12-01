@@ -9,7 +9,7 @@ const api = axios.create({
     }
 });
 
-export const search = (data) => api.post('/api/find', data); 
+export const search = (data) => api.post('/api/find', data);
 export const add = (data) => api.post('/api/add', data);
 export const del = (data) => api.post('/api/del', data);
 export const upd = (data) => api.post('/api/upd', data);
@@ -25,4 +25,4 @@ export const updsteptwo = (data) => api.post('/api/stepone/upd', data);
 export const searchtwo = (data) => api.post('/api/steptwo/find', data);
 export const addsteptwoone = (data) => api.post('/api/steptwo/add', data);
 export const delsteptwoone = (data) => api.post('/api/steptwo/del', data);
-// export const updsteptwo = (data) => api.post('/api/stepone/upd', data);
+export const updsteptwoone = (data) => api.post('/api/steptwo/upd', data);

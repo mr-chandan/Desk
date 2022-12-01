@@ -45,6 +45,24 @@ class Steptwo {
             console.log(error)
         }
     }
+    async upd(req, res) {
+        const { query } = req.body
+        var quearylist = query
+        try {
+            mysqlConnection.query(quearylist, function (err, results, rows) {
+                if (!err) {
+                    res.status(200).send(rows);
+                } else {
+                    res.status(502).send("Db error");
+                    console.log(err)
+                    console.log(results)
+                }
+            });
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 }
 
 module.exports = new Steptwo();

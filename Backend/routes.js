@@ -19,6 +19,6 @@ router.post('/api/stepone/upd', Stepone.upd)
 router.post('/api/steptwo/find', Steptwo.search)
 router.post('/api/steptwo/add', Steptwo.add)
 router.post('/api/steptwo/del', Steptwo.del)
-// router.post('/api/stepone/upd', Stepone.upd)
+router.post('/api/steptwo/upd', Steptwo.upd)
 
 module.exports = router;

@@ -6,10 +6,12 @@ import './Tables.css'
 import Button from '@mui/material/Button';
 import { searchtwo } from '../../../https/request';
 import { delsteptwoone } from '../../../https/request'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setolddata } from '../../../store/TableSlice'
 
 const Steptwotables = (props) => {
   const [rowData, setrowdata] = useState([]);
+  const dispatch = useDispatch()
   const storedata = useSelector((state) => state.TableSlice.stepone)
   useEffect(() => {
     async function fetchdata() {
@@ -40,14 +42,53 @@ const Steptwotables = (props) => {
             }
           } catch (err) {
             console.log("err")
+          } finally {
+            props.valuee()
           }
         }
         if (check) {
-          adds()
+          adds();
         }
-        props.valuee()
-      } else {
-        console.log("nope")
+      } else if (props.data == "subjectbtn") {
+        const check = window.confirm("Are u sure of deleting the records")
+        const pdata = p.data
+        const query = `DELETE FROM ${storedata.Sem_Name}_subjects WHERE id=${pdata.id};`
+        async function adds() {
+          try {
+            const res = await delsteptwoone({ query })
+            console.log(res)
+            if (res.status == "200") {
+              console.log("sucess")
+            }
+          } catch (err) {
+            console.log("err")
+          } finally {
+            props.valuee()
+          }
+        }
+        if (check) {
+          adds();
+        }
+      }else if (props.data == "stdinfobtn") {
+        const check = window.confirm("Are u sure of deleting the records")
+        const pdata = p.data
+        const query = `DELETE FROM ${storedata.Sem_Name}_studentinfo WHERE id=${pdata.ID};`
+        async function adds() {
+          try {
+            const res = await delsteptwoone({ query })
+            console.log(res)
+            if (res.status == "200") {
+              console.log("sucess")
+            }
+          } catch (err) {
+            console.log("err")
+          } finally {
+            props.valuee()
+          }
+        }
+        if (check) {
+          adds();
+        }
       }
     }
     return <Button variant="contained" color="error" onClick={handledelete}>Delete</Button>
@@ -63,9 +104,11 @@ const Steptwotables = (props) => {
   }
   const Updatecell = (p) => {
     const handleupdate = () => {
+      dispatch(setolddata(p.data))
+      props.click()
       props.setUpdate(true)
+      props.setOpen(true)
       props.setformData(p.data)
-      props.open()
     }
     return <Button variant="contained" onClick={handleupdate} className='space'>Update</Button>
   }
